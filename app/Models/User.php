@@ -61,6 +61,15 @@ class User extends Authenticatable
     }
 
 
+    public function workouts(): hasmany{
+        return $this->hasMany(exercise::class);
+    }
+
+
+    public function food(): hasmany{
+        return $this->hasMany(meal::class);
+    }
+
     /**
      * Get the user's initials
      */

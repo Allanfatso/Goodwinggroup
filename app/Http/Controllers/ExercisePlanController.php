@@ -7,11 +7,12 @@ use App\Models\User;
 use App\Models\exercise_plan;
 use PhpParser\Node\Expr\AssignOp\Mod;
 
+
 class ExercisePlanController extends Controller
 {
     //
 
-    public function workout_plan(){
+    public function workout_plan(Request $request){
 
         // get database values to send to API
         // Values are:
@@ -68,8 +69,24 @@ class ExercisePlanController extends Controller
 
         if ($err) {
             echo "cURL Error #:" . $err;
-        } else {
-            echo $response;
+        };
+
+        $data = json_decode($response, true);
+
+        // array to store the plan
+        $workoutroutine = [];
+        if(is_array($data)){
+            $results = $data['results'] ?? [];
+            foreach($results as $item){
+                if(!empty($item['id'])){
+                    $workoutroutine[$item['id']] =$item;
+                }
+            }
         }
+        session(['workout_routine' => $workoutroutine]);
+
+        //return results on the dashboard view
+        return view('dashboard',
+        ['workout_routine' => $workoutroutine]);
 }
 }

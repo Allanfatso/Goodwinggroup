@@ -52,6 +52,38 @@ return new class extends Migration
         });
 
 
+        Schema::create('meals', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')
+                  ->constrained('users')
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
+            $table->string('exercise_name');
+            $table->text('description')->nullable();
+            $table->text('goal')->nullable();
+            $table->integer('calories_per_day')->nullable();
+            $table->json('macronutrients')->nullable();
+            $table->json('meal_suggestions')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('exercises', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')
+                  ->constrained('users')
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
+
+            $table->string('day');
+            $table->string('name');
+            $table->string('duration')->nullable();
+            $table->string('repetitions')->nullable();
+            $table->string('sets')->nullable();
+            $table->string('equipment')->nullable();
+            $table->text('description')->nullable();
+            $table->json('additional_info')->nullable();
+            $table->timestamps();
+        });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
@@ -77,6 +109,8 @@ return new class extends Migration
         Schema::dropIfExists('exercise_plans');
         Schema::dropIfExists('nutrition_plans');
         Schema::dropIfExists('password_reset_tokens');
+        Schema::dropIfExists('exercises');
+        Schema::dropIfExists('meals');
         Schema::dropIfExists('sessions');
         Schema::dropIfExists('users');
     }
