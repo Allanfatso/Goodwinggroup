@@ -63,7 +63,11 @@ class ExercisePlanController extends Controller
             CURLOPT_HTTPHEADER => [
                 "Content-Type: application/json",
                 "x-rapidapi-host: ai-workout-planner-exercise-fitness-nutrition-guide.p.rapidapi.com",
-                "x-rapidapi-key: 8e0e65ac48mshcbf6a77e9c608ddp168d8cjsn8434ed1bdc8f"
+                "x-rapidapi-key: 2cc8b3d677msh8438b67bbde108ep161d40jsn25fc8f63d23f"
+                /*
+                "Content-Type: application/json",
+                "x-rapidapi-host: ai-workout-planner-exercise-fitness-nutrition-guide.p.rapidapi.com",
+                "x-rapidapi-key: 8e0e65ac48mshcbf6a77e9c608ddp168d8cjsn8434ed1bdc8f"*/
             ],
         ]);
 
@@ -100,8 +104,8 @@ class ExercisePlanController extends Controller
                     'repetitions' => $exercise['repetitions'] ?? null,
                     'sets' => $exercise['sets'] ?? null,
                     'equipment' => $exercise['equipment'] ?? null,
-                    'description' => null,
-                    'additional_info' => null,
+                    /*'description' => null,*/
+                    /*'additional_info' => null,*/
                 ]);
 
             }

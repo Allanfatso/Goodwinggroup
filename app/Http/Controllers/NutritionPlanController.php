@@ -68,7 +68,7 @@ class NutritionPlanController extends Controller
             CURLOPT_HTTPHEADER => [
                 "Content-Type: application/json",
                 "x-rapidapi-host: ai-workout-planner-exercise-fitness-nutrition-guide.p.rapidapi.com",
-                "x-rapidapi-key: 8e0e65ac48mshcbf6a77e9c608ddp168d8cjsn8434ed1bdc8f"
+                "x-rapidapi-key: 2cc8b3d677msh8438b67bbde108ep161d40jsn25fc8f63d23f"
             ],
         ]);
 
@@ -81,10 +81,12 @@ class NutritionPlanController extends Controller
             echo "cURL Error #:" . $err;
             return back()->with('error', 'Failed to generate workout plan.');;
         }
-        dd($response);
+
         $data = json_decode($response, true);
 
-        if (! $data || $data['status'] !== 'success') {
+        //dd($data);
+
+        if (!$data) {
             return back()->with('error', 'Failed to generate workout plan.');
         }
         //save data into meal table
@@ -103,7 +105,7 @@ class NutritionPlanController extends Controller
             'meal_suggestions' => $result['meal_suggestions'] ?? null,
         ]);
 
-        dd($newMeal);
+
         // return a view to preview the result (you can use the show_meal view below)
         return view('show_meal', [
             'plan' => $result,
