@@ -17,7 +17,7 @@
       @if (Route::has('login'))
         <nav class="p-4 flex justify-end gap-4">
           @auth
-            <a href="{{ route('dashboard') }}" class="btn btn-primary">
+            <a href="{{ route('dashboard.index') }}" class="btn btn-primary">
               My Plans
             </a>
           @else

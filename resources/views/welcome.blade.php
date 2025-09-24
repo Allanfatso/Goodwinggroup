@@ -14,7 +14,7 @@
       <nav class="p-4 flex justify-end gap-4">
         @auth
           {{-- If logged in = go directly to plans --}}
-          <a href="{{ route('dashboard') }}" class="btn btn-primary">
+          <a href="{{ route('dashboard.index') }}" class="btn btn-primary">
              My Plans
           </a>
         @else
@@ -43,7 +43,7 @@
           </p>
           @auth
             {{-- If logged in = plans --}}
-            <a href="{{ route('dashboard') }}" class="btn btn-primary">Get Started</a>
+            <a href="{{ route('dashboard.index') }}" class="btn btn-primary">Get Started</a>
           @else
             {{-- If guest = login --}}
             <a href="{{ route('login') }}" class="btn btn-primary">Get Started</a>

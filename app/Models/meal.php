@@ -14,6 +14,7 @@ class meal extends Model
 
     // Fillable fields (exclude id and user_id)
     protected $fillable = [
+        'user_id',
         'exercise_name',
         'description',
         'goal',

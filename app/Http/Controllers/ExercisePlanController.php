@@ -49,7 +49,7 @@ class ExercisePlanController extends Controller
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
             CURLOPT_POSTFIELDS => json_encode([
-                'goal' => 'Build muscle',
+                'goal' => $goal,
                 'fitness_level' => $fitness_level,
                 'preferences' => $preferences,
                 'health_conditions' => $health_conditions,

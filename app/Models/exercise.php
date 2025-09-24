@@ -10,14 +10,14 @@ class exercise extends Model
     //
     protected $table = 'exercises';
     protected $fillable = [
+        'user_id',
         'day',
         'name',
         'duration',
         'repetitions',
         'sets',
         'equipment',
-        'description',
-        'additional_info',
+
     ];
 
     // Each exercise belongs to a user

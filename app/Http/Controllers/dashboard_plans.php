@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use App\Models\exercise;
+use App\Models\User;
+use App\Models\meal;
+
 
 class dashboard_plans extends Controller
 {
@@ -11,7 +16,11 @@ class dashboard_plans extends Controller
      */
     public function index()
     {
-       //
+        $user = User::with(['workouts', 'food'])->findOrFail(auth()->id());
+        return view('dashboard', [
+            'workouts' => $user->workouts,
+            'meals'    => $user->food,
+        ]);
     }
 
     /**
@@ -33,66 +42,30 @@ class dashboard_plans extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show($id)
     {
-        //
-        // ensure you display:
-        // 'target_weight' -> from users table
-        // fitness_level -> from exercise_plans table
-        // plan_duration_weeks -> from exercise_plans table
-        // Whilst the following will be displayed seperately:
-        // dietary_restrictions -> from nutrition_plans table
-        // daily_activity_level -> from nutrition_plans table
-        // two seperate sections on the dashboard for exercise and diet plans.
-
-
-        // exercise plan section
-
-        if (!\Schema::hasTable('exercise_plans')) {
-            // Table does not exist, handle accordingly
-            $exercisePlan = null;
-        } else {
-            $exercisePlan = \DB::table('exercise_plans')
-                ->join('users', 'exercise_plans.user_id', '=', 'users.id')
-                ->select('users.target_weight', 'exercise_plans.fitness_level', 'exercise_plans.plan_duration_weeks')
-                ->where('users.id', auth()->id())
-                ->get();
-        }
-        // if no data found, set to null
-        if (!$exercisePlan) {
-            $exercisePlan = null;
-        }
-        // nutrition plan section
-        // check if table exists and has data first before querying
-        if (!\Schema::hasTable('nutrition_plans')) {
-            // Table does not exist, handle accordingly
-            $nutritionPlan = null;
-        } else {
-            $nutritionPlan = \DB::table('nutrition_plans')
-                ->join('users', 'nutrition_plans.user_id', '=', 'users.id')
-                ->select('nutrition_plans.dietary_restrictions', 'nutrition_plans.daily_activity_level')
-                ->where('users.id', auth()->id())
-                ->get();
-        }
-        // if no data found, set to null
-        if (!$nutritionPlan) {
-            $nutritionPlan = null;
-        }
-
-
-        // return json response in a view.
+        // Get the authenticated user with related workouts, meals
+        $user = User::with(['workouts', 'food'])->findOrFail(auth()->id());
         return view('dashboard', [
-            'exercise_plan' => $exercisePlan,
-            'nutrition_plan' => $nutritionPlan
+            'workouts' => $user->workouts,
+            'meals'    => $user->food,
         ]);
+
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id, Request $request)
     {
         //
+        if ($request->get('type') === 'meal') {
+        $meal = meal::where('user_id', auth()->id())->findOrFail($id);
+        return view('edit_meal', compact('meal'));
+        }
+
+        $workout = exercise::where('user_id', auth()->id())->findOrFail($id);
+        return view('edit_workout', compact('workout'));
     }
 
     /**
@@ -100,14 +73,52 @@ class dashboard_plans extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        if ($request->get('type') === 'meal') {
+        $meal = meal::where('user_id', auth()->id())->findOrFail($id);
+        $meal->update($request->only(['goal', 'calories_per_day', 'description']));
+        return redirect()->route('dashboard.index')
+            ->with('success', 'Meal updated successfully.');
+        }
+
+        $request->validate([
+            'sets' => 'nullable|string|max:10',
+            'repetitions' => 'nullable|string|max:10',
+            'duration' => 'nullable|string|max:20',
+        ]);
+
+        $workout = exercise::where('user_id', auth()->id())->findOrFail($id);
+        $workout->update($request->only(['sets', 'repetitions', 'duration']));
+
+        return redirect()->route('dashboard.index')
+            ->with('success', 'Workout updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, $id)
+    {
+        if ($request->get('type') === 'meal') {
+        $meal = meal::where('user_id', auth()->id())->findOrFail($id);
+        $meal->delete();
+        return redirect()->route('dashboard.index')
+            ->with('success', 'Meal deleted successfully.');
+        }
+
+        $workout = exercise::where('user_id', auth()->id())->findOrFail($id);
+        $workout->delete();
+
+        return redirect()->route('dashboard.index')
+            ->with('success', 'Workout deleted successfully.');
+    }
+
+    public function meal_destroy(string $id)
     {
         //
+        $meal = meal::where('user_id', auth()->id())->findOrFail($id);
+        $meal->delete();
+
+        return redirect()->route('dashboard')
+            ->with('success', 'Meal deleted successfully.');
     }
 }
