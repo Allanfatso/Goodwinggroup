@@ -80,8 +80,6 @@ return new class extends Migration
             $table->string('repetitions')->nullable();
             $table->string('sets')->nullable();
             $table->string('equipment')->nullable();
-            $table->text('description')->nullable();
-            $table->json('additional_info')->nullable();
             $table->timestamps();
         });
 
