@@ -46,7 +46,7 @@ return new class extends Migration
             ->constrained('users')
             ->onUpdate('cascade')
             ->onDelete('cascade');
-            $table->json('dietary_restrictions');
+            $table->string('dietary_restrictions');
             $table->string('daily_activity_level');
             $table->timestamps();
         });
@@ -59,6 +59,7 @@ return new class extends Migration
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
             $table->string('exercise_name');
+            $table->string('seo_title')->nullable();
             $table->text('description')->nullable();
             $table->text('goal')->nullable();
             $table->integer('calories_per_day')->nullable();

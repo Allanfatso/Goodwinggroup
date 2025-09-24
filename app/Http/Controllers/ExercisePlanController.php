@@ -92,7 +92,7 @@ class ExercisePlanController extends Controller
                 $dayName = $day['day'] ?? 'Day 1';
 
                 foreach($day['exercises'] as $exercise){
-                    Exercise::create([
+                    Exercise::updateorcreate([
                     'user_id' => $user->id,
                     'day' => $dayName,
                     'name' => $exercise['name'] ?? '',

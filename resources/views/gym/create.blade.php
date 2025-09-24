@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-3xl font-bold text-primary">Let us know your workout plan.</h2>
+        <h2 class="text-3xl font-bold text-primary">Let us know your workout plan...</h2>
     </x-slot>
 
     <div class="p-6 bg-base-200 rounded-xl shadow-lg pb-32">

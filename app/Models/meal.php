@@ -15,6 +15,7 @@ class meal extends Model
     // Fillable fields (exclude id and user_id)
     protected $fillable = [
         'user_id',
+        'seo_title',
         'exercise_name',
         'description',
         'goal',
@@ -22,6 +23,12 @@ class meal extends Model
         'macronutrients',
         'meal_suggestions',
     ];
+
+    protected $casts = [
+        'macronutrients'  => 'array',
+        'meal_suggestions' => 'array',
+    ];
+
 
     // Each meal belongs to a user
     public function user(): BelongsTo
