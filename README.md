@@ -7,6 +7,47 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+# HealthPlanner Web Application
+
+**HealthPlanner** is a Laravel web application that provides personalized workout and diet advice using AI. Users can input health data and receive AI-generated recommendations via the **RapidAPI AIHealthPlanner API**. The app also allows users to save and revisit their advice over time.
+
+## Features
+
+### Authentication & Authorization
+- User registration, login, and password management powered by **Laravel Breeze**
+- Middleware-protected routes to ensure secure access to user data
+
+### AI-Powered Health Advice
+- Uses **RapidAPI AIHealthPlanner API** to generate personalized workout and diet recommendations
+- Users provide input (weight, goals, preferences) and receive actionable guidance
+
+### Persistent Storage
+- Advice is stored in **MySQL** for future reference
+- Users can view, update, or delete past recommendations
+
+### Frontend
+- Blade templates with **Tailwind CSS** and DaisyUI for a responsive and clean UI.
+
+### RESTful Architecture
+- Structured API endpoints to handle user requests and responses
+
+## Requirements
+- PHP >= 8.2
+- Composer
+- Laravel >= 11
+- Node.js & npm
+- MySQL
+- RapidAPI account with AIHealthPlanner API key
+
+## Setup Instructions
+
+### 1. Clone the repository:
+```bash
+git clone https://github.com/Allanfatso/Goodwinggroup.git
+cd Goodwinggroup
+
+
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
